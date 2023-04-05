@@ -9,12 +9,20 @@ import LoginPage.DBConnection;
 import LoginPage.LoginScreen;
 import com.mysql.cj.util.StringUtils;
 import com.sun.jdi.connect.spi.Connection;
+import java.awt.Image;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.sql.*;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 /**
@@ -57,6 +65,8 @@ public class AdminPanelHomePage extends javax.swing.JFrame {
         PriceTextField = new javax.swing.JTextField();
         ClearPageButton = new javax.swing.JButton();
         CreateItemButton = new javax.swing.JButton();
+        img = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ExistingInventoryTable = new javax.swing.JTable();
@@ -163,11 +173,21 @@ public class AdminPanelHomePage extends javax.swing.JFrame {
             }
         });
 
+        img.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+
+        jButton2.setText("Choose...");
+        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 0)));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,10 +200,18 @@ public class AdminPanelHomePage extends javax.swing.JFrame {
                     .addComponent(DescriptionTextField)
                     .addComponent(PriceTextField))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(ClearPageButton)
-                .addGap(17, 17, 17)
-                .addComponent(CreateItemButton)
-                .addGap(20, 20, 20))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(ClearPageButton)
+                        .addGap(17, 17, 17)
+                        .addComponent(CreateItemButton)
+                        .addGap(20, 20, 20))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(img, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(99, 99, 99))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,6 +220,15 @@ public class AdminPanelHomePage extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ClearPageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CreateItemButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(52, 52, 52)
+                        .addComponent(img, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -204,12 +241,7 @@ public class AdminPanelHomePage extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(DescriptionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(155, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ClearPageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(CreateItemButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30))))
+                        .addContainerGap(155, Short.MAX_VALUE))))
         );
 
         jTabbedPane1.addTab("Add New Item", jPanel1);
@@ -477,7 +509,8 @@ public class AdminPanelHomePage extends javax.swing.JFrame {
         String itemPrice       = PriceTextField.getText();
         String itemQuantity    = "0";
         String itemDescription = DescriptionTextField.getText();
-
+        
+        
         if(itemName.isEmpty() ||
             itemPrice.isEmpty() ||
             itemQuantity.isEmpty() ||
@@ -494,7 +527,10 @@ public class AdminPanelHomePage extends javax.swing.JFrame {
                 createNewItem(itemName, Double.parseDouble(itemPrice), Integer.parseInt(itemQuantity), itemDescription);
             } catch (SQLException ex) {
                 java.util.logging.Logger.getLogger(AdminPanelHomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (FileNotFoundException ex) {
+                java.util.logging.Logger.getLogger(AdminPanelHomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
+            
         }
     }//GEN-LAST:event_CreateItemButtonActionPerformed
 
@@ -535,6 +571,26 @@ public class AdminPanelHomePage extends javax.swing.JFrame {
         newLoginInstance.setTitle("Login");
         newLoginInstance.setVisible(true);
     }//GEN-LAST:event_LogoutButtonActionPerformed
+    
+    String s;
+    
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        JFileChooser filechooser = new JFileChooser();
+        filechooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".IMAGE", "jpg","png","gif");
+        filechooser.addChoosableFileFilter(filter);
+        int result = filechooser.showSaveDialog(null);
+        if(result == JFileChooser.APPROVE_OPTION)
+        {
+            File selectedFile = filechooser.getSelectedFile();
+            String path = selectedFile.getAbsolutePath();
+            img.setIcon(ResizeImage(path));
+            s = path;
+        }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public static boolean isNumeric(String str) { return str != null && str.matches("[-+]?\\d*\\.?\\d+"); }
     
@@ -566,6 +622,15 @@ public class AdminPanelHomePage extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    
+    public ImageIcon ResizeImage(String imgpath){
+        ImageIcon MyImage = new ImageIcon(imgpath);
+        Image imge = MyImage.getImage();
+        Image newImage = imge.getScaledInstance(img.getWidth(), img.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon image = new ImageIcon(newImage);
+        return image;
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -613,6 +678,8 @@ public class AdminPanelHomePage extends javax.swing.JFrame {
     private javax.swing.JTextField NameTextField;
     private javax.swing.JTable PreviousSalesTable;
     private javax.swing.JTextField PriceTextField;
+    private javax.swing.JLabel img;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -630,7 +697,7 @@ public class AdminPanelHomePage extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
     
-    private void createNewItem(String itemName, double itemPrice, int itemQuantity, String itemDescription) throws SQLException {
+    private void createNewItem(String itemName, double itemPrice, int itemQuantity, String itemDescription) throws SQLException, FileNotFoundException {
         java.sql.Connection dbconn = conn.connectDB();
         
         try {
@@ -643,12 +710,15 @@ public class AdminPanelHomePage extends javax.swing.JFrame {
                 if(res.next()) {
                     JOptionPane.showMessageDialog(this, "Item already exists in the database.", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    PreparedStatement st2 = dbconn.prepareStatement("INSERT INTO products (name, price, quantity, description) VALUES (?, ?, ?, ?)");
+                    PreparedStatement st2 = dbconn.prepareStatement("INSERT INTO products (name, price, quantity, description, image) VALUES (?, ?, ?, ?, ?)");
+                    
+                    InputStream is = new FileInputStream(new File(s));
                     
                     st2.setString(1, itemName);
                     st2.setDouble(2, itemPrice);
                     st2.setInt(3, itemQuantity);
                     st2.setString(4, itemDescription);
+                    st2.setBlob(5, is);
 
                     int res2 = st2.executeUpdate();
                     
